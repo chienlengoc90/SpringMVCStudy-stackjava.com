@@ -11,7 +11,7 @@
 
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring-config.xml</param-value>
+			<param-value>/WEB-INF/spring-mvc-servlet.xml</param-value>
 			<!-- Không chỉ rõ file config cho Spring (Dispatcher Servlet) thì mặc 
 				định Spring sẽ tìm file WEB-INF/{servlet-name}-servlet.xml Spring sẽ tìm 
 				file spring-mvc-servlet.xml trong foler WEB-INF. -->
@@ -23,4 +23,25 @@
 		<servlet-name>spring-mvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+
+	<!-- HỖ TRỢ ĐA NGÔN NGỮ -->
+	<!-- FILTER NÀY PHẢI LÀ FILTER ĐẦU TIÊN -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- ĐA NGÔN NGỮ -->
 </web-app>

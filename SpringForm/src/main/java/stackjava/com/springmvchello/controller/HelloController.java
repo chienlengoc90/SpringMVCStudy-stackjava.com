@@ -9,12 +9,12 @@ public class HelloController {
 
 	@RequestMapping("/")
 	public String index() {
-		return "index";
+		return "home";
 	}
 
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
-	public String hello() {
-		return "hello";
-	}
+//	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+//	public String hello() {
+//		return "hello";
+//	}
 
 }

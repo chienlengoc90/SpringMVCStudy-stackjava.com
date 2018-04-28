@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- Enables the Spring MVC @Controller programming model -->
 
+
+	<mvc:annotation-driven />
 	<!-- Thực hiện auto scan component với package stackjava.com.springmvchello -->
 	<context:component-scan base-package="stackjava.com.springmvchello" />
 
@@ -16,4 +21,35 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
+
+	<!-- HỖ TRỢ ĐA NGÔN NGỮ -->
+	<!-- ĐỊNH NGHĨA NƠI CHỨA CÁC FILE -->
+	<!-- FOLDER Ở VALUE -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/i18n/messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"> -->
+	<!-- tạo ra 1 cookies có giá trị là myAppLocaleCookie để xác định ngôn ngữ 
+		của client -->
+	<!-- xác định ngôn ngữ bằng cách sử dụng session. -->
+	<!-- Khi cookies/session hết hạn hoặc bị xóa thì trở về mặc định) -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+		<property name="cookieName" value="myAppLocaleCookie"></property>
+		<property name="cookieMaxAge" value="3600"></property>
+	</bean>
+	
+	<!-- mvc:interceptors -->
+	<!-- Thực hiện lọc request có paramName = language -->
+	<!-- language=vi_VN => TRỞ THÀNH TIẾNG VIỆT) -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+	<!-- HỖ TRỢ ĐA NGÔN NGỮ -->
 </beans>
